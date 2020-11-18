@@ -3,3 +3,13 @@
   Override this in your site to insert code just before the closing <head> tag.
   For example, to install an analytics tracking package.
 -->
+<script async defer data-domain="nischay.pro" src="https://plausible.nischay.pro/js/plausible.js"></script>
+{{- if .Params.plotly }}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{{- end }}
+
+{{- if .Params.zoom }}
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script>
+mediumZoom(document.querySelectorAll('.zoomable'), {scrollOffset: 300})</script>
+{{- end}}

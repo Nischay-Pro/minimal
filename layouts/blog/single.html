@@ -17,12 +17,22 @@
         {{ range $related }} {{ partial "list-item" . }} {{ end }}
     {{ end }}
 
-    <!-- Disquis comments -->
+    <!-- Disquis comments
     {{ if and .Site.DisqusShortname (not .Params.disableComments) }}
         <h4 class="page-header">Comments</h4>
+        
         {{ template "_internal/disqus.html" . }}
-    {{ end }}
+    {{ end }} -->
 
+    <!-- Utteranc comments -->
+        <!-- <h4 class="page-header">Comments</h4> -->
+    <script src="https://utteranc.es/client.js"
+    repo="Nischay-Pro/nischay.pro.comments"
+    issue-term="pathname"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+    </script>
 </main>
 
 {{ partial "footer" . }}
