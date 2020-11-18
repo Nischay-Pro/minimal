@@ -26,9 +26,10 @@ img {
     transform: translateY(22vh);
 }
 
-.intro > h1 {
+
+.intro > h1  {
     color: #212121;
-    font-size: 12vh;
+    font-size: calc(4vw + 4vh + 2vmin);
 }
 
 .intro > h2 {
@@ -105,4 +106,18 @@ a:hover {
 
 footer {
     border-bottom: var(--border-width) solid var(--accent);
+}
+
+
+.highlight {
+    text-align: left;
+}
+
+main {
+    text-align: left;
+}
+
+html {
+    visibility: visible;
+    opacity: 1;
 }

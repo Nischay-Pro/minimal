@@ -9,19 +9,10 @@
             <link rel="icon" href="{{ .Site.Params.favicon | absURL }}">
         {{ end }}
         {{ partial "css" . }} {{ partial "js" . }} {{ hugo.Generator }}
+        <link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
         {{ with .OutputFormats.Get "RSS" }}
             <link href="{{ .RelPermalink }}" rel="alternate" type="{{ .MediaType.Type }}" title="{{ $.Site.Title }}" />
             <link href="{{ .RelPermalink }}" rel="feed" type="{{ .MediaType.Type }}" title="{{ $.Site.Title }}" />
-        {{ end }}
-
-        {{ if .Site.GoogleAnalytics }}
-            <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
-            <script>
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments)};
-              gtag('js', new Date());
-              gtag('config', '{{ .Site.GoogleAnalytics }}');
-            </script>
         {{ end }}
 
         {{ if .Site.Params.MathJax | default true }}
@@ -29,9 +20,51 @@
         {{ end }}
 
         {{ partial "head-close" . }}
+        <script>
+            var savedTheme = localStorage.getItem("theme-mode-storage") || "light";
+            var darkTheme = document.getElementById("dark-mode-theme");
+            setTheme(savedTheme);
+            
+            function setTheme(mode) {
+                if (mode === "dark") {
+                    localStorage.setItem("theme-mode-storage", mode);
+                    darkTheme.disabled = false;
+                    
+                } else if (mode === "light") {
+                    localStorage.setItem("theme-mode-storage", mode);
+                    darkTheme.disabled = true;
+                }
+            }
+            
+            function setThemeClass(){
+                var mode = localStorage.getItem("theme-mode-storage") || "light";
+                var toggle = document.getElementById("theme-mode-toggle");
+                if (mode === "dark") {
+                    toggle.className = "fa fa-sun-o";
+                } else if (mode === "light") {
+                    localStorage.setItem("theme-mode-storage", mode);
+                    toggle.className = "fa fa-moon-o";
+                }
+                setToggle(toggle);
+            }
+            
+            function setToggle(toggle){
+                toggle.addEventListener("click", () => {
+                    if (toggle.className === "fa fa-moon-o") {
+                        toggle.className = "fa fa-sun-o";
+                        setTheme("dark");
+                    } else if (toggle.className === "fa fa-sun-o") {
+                        toggle.className = "fa fa-moon-o";
+                        setTheme("light");
+                    }
+                });
+            }
+            
+            </script>
+
     </head>
 
-    <body>
+    <body onload="setThemeClass()">
         {{ partial "body-open" . }}
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
@@ -53,6 +86,8 @@
                     {{ end }}
                     {{ if .Site.Menus.icon }}
                         <ul class="nav navbar-nav navbar-right">
+                            <li class="navbar-icon"><a id="theme-mode-toggle" class="fa fa-moon-o"></a></li>
+
                             {{ range sort .Site.Menus.icon }}
                                 <li class="navbar-icon"><a href="{{ .URL }}"><i class="fa fa-{{ .Name }}"></i></a></li>
                             {{ end }}
