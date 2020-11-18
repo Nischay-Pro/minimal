@@ -39,13 +39,14 @@
             function setThemeClass(){
                 var mode = localStorage.getItem("theme-mode-storage") || "light";
                 var toggle = document.getElementById("theme-mode-toggle");
+                var toggle2 = document.getElementById("theme-mode-toggle-2");
                 if (mode === "dark") {
-                    toggle.className = "fa fa-sun-o";
+                    toggle2.className = "fa fa-sun-o";
                 } else if (mode === "light") {
                     localStorage.setItem("theme-mode-storage", mode);
-                    toggle.className = "fa fa-moon-o";
+                    toggle2.className = "fa fa-moon-o";
                 }
-                setToggle(toggle);
+                setToggle(toggle2);
             }
             
             function setToggle(toggle){
@@ -66,30 +67,26 @@
 
     <body onload="setThemeClass()">
         {{ partial "body-open" . }}
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand visible-xs" href="#">{{ .Title }}</a>
-                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <div class="container-fluid">
+                <!-- <a class="navbar-brand" href="#">{{ .Title }}</a> -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     {{ if .Site.Menus.main }}
-                        <ul class="nav navbar-nav">
+                        <ul class="navbar-nav mr-auto mb-2 mb-lg-0 ml-5">
                             {{ range sort .Site.Menus.main }}
-                                <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ .URL }}">{{ .Name }}</a></li>
                             {{ end }}
                         </ul>
                     {{ end }}
                     {{ if .Site.Menus.icon }}
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="navbar-icon"><a id="theme-mode-toggle" class="fa fa-moon-o"></a></li>
+                        <ul class="navbar-nav ml-auto mb-2 mb-lr-0">
+                            <li class="nav-item"><a class="nav-link" id="theme-mode-toggle"><i id="theme-mode-toggle-2" class="fa fa-moon-o"></i></a></li>
 
                             {{ range sort .Site.Menus.icon }}
-                                <li class="navbar-icon"><a href="{{ .URL }}"><i class="fa fa-{{ .Name }}"></i></a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ .URL }}"><i class="fa fa-{{ .Name }}"></i></a></li>
                             {{ end }}
                         </ul>
                     {{ end }}
